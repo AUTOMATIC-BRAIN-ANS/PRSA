@@ -23,16 +23,7 @@ def segment_signal(time_series: np.ndarray, idx_anchors: np.ndarray, L: int) -> 
 
     padded_time_series = np.pad(time_series, (max_padding, max_padding), 'constant', constant_values=np.nan)
 
-    windows = []
-
-    for idx in idx_anchors:
-        adjusted_idx = idx + max_padding
-
-        start_idx = adjusted_idx - L
-        end_idx = adjusted_idx + L
-        segment = padded_time_series[start_idx:end_idx]
-
-        windows.append(segment)
+    windows = [padded_time_series[idx+max_padding-L:idx+max_padding+L] for idx in idx_anchors] 
     
     return np.array(windows)
 

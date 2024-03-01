@@ -8,13 +8,14 @@ J Appl Physiol (1985).
 2010;108(6):1668-1673. doi:10.1152/japplphysiol.00013.2010
 """
 
-def detect_anchors_from_rr_acc(time_series: np.ndarray, T: int, threshold: float = None) -> np.ndarray:
+def detect_anchors_from_rr_ac(time_series: np.ndarray, T: int = 3, threshold: float = None) -> np.ndarray:
     """
-    Identify anchor points in the time series where there is an acceleration.
+    Identify anchor points in the time series where there is an acceleration. Default value of T set to 3
+    beacuse later on it allows to calculate capacities according to aforementioned article.
 
     Parameters:
     - time_series (np.ndarray): The RR interval data.
-    - T (int): The number of points to exclude from the start and end of the array.
+    - T (int, default = 3): The number of points to exclude from the start and end of the array.
     - threshold (float, optional): Threshold for change relative to the previous interval.
 
     Returns:
@@ -30,13 +31,14 @@ def detect_anchors_from_rr_acc(time_series: np.ndarray, T: int, threshold: float
     
     return np.array(anchor_points)
 
-def detect_anchors_from_rr_dc(time_series: np.ndarray, T: int, threshold: float = None) -> np.ndarray:
+def detect_anchors_from_rr_dc(time_series: np.ndarray, T: int = 3, threshold: float = None) -> np.ndarray:
     """
-    Identify points in the time series where there is a deceleration.
+    Identify points in the time series where there is a deceleration. Default value of T set to 3
+    beacuse later on it allows to calculate capacities according to aforementioned article.
 
     Parameters:
     - time_series (np.ndarray): The RR interval data.
-    - T (int): The number of points to exclude from the start and end of the array.
+    - T (int, default = 3): The number of points to exclude from the start and end of the array.
     - threshold (float, optional): Threshold for change relative to the previous interval.
 
     Returns:
@@ -100,14 +102,15 @@ prediction of cardiovascular risk. Chaos.
 2007;17(1):015112. doi:10.1063/1.2430636
 """
 
-def detect_anchors_threshold_acc(time_series: np.ndarray, threshold: float) -> np.ndarray:
+def detect_anchors_threshold_ac(time_series: np.ndarray, threshold: float = 0.2) -> np.ndarray:
     """
     Identify points in the time series where there is an acceleration, checking against a threshold.
-    The anchor points correspond to increases in the time series that are not too large.
+    The anchor points correspond to increases in the time series that are not too large. Threshold set 
+    to 0.2 as a default value based on article Kantelhardt JW et al.
 
     Parameters:
     - time_series (np.ndarray): The time series.
-    - threshold (float): The maximum percentage of change between two values acceptable as an acceleration.
+    - threshold (float, default = 0.2): The maximum percentage of change between two values acceptable as an acceleration.
 
     Returns:
     - np.ndarray: The indices of the detected anchor points.
@@ -117,10 +120,11 @@ def detect_anchors_threshold_acc(time_series: np.ndarray, threshold: float) -> n
     
     return np.array(anchor_points)
 
-def detect_anchors_threshold_dc(time_series: np.ndarray, threshold: float) -> np.ndarray:
+def detect_anchors_threshold_dc(time_series: np.ndarray, threshold: float = 0.2) -> np.ndarray:
     """
     Identify points in the time series where there is a deceleration, checking against a threshold.
-    The anchor points correspond to decreases in the time series that are not too large.
+    The anchor points correspond to decreases in the time series that are not too large. Threshold set 
+    to 0.2 as a default value based on article Kantelhardt JW et al.
 
     Parameters:
     - time_series (np.ndarray): The time series.

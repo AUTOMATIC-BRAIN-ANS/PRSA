@@ -3,7 +3,7 @@ from scipy.ndimage import label
 from scipy.signal import find_peaks
 from scipy.stats import zscore
 
-def normalize_time_series(time_series: np.ndarray) -> np.ndarray:
+def standardize_time_series(time_series: np.ndarray) -> np.ndarray:
     """
     Normalize the time series to a range between 0 and 1.
 

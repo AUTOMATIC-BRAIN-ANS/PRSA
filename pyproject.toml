@@ -2,7 +2,7 @@
 name = "prsa"
 version = "0.1.0"
 description = "Package for multiple PRSA approaches"
-authors = ["Mikolaj Najda <najda.mikolaj00@gmail.com>"]
+authors = ["Mikolaj Najda <276928@student.pwr.edu.pl>"]
 license = "MIT"
 readme = "README.md"
 

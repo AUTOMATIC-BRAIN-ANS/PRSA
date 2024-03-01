@@ -27,8 +27,8 @@ def calculate_ac(prsa_output_ac: np.ndarray, L: int, s: int) -> float:
     float: The calculated AC value.
     """
     L = int(L / 2)
-    sum_ac_upper = sum(prsa_output_ac[L + 1:L + s + 1])
-    sum_ac_lower = sum(prsa_output_ac[L - s + 1:L + 1])
+    sum_ac_upper = np.sum(prsa_output_ac[L + 1:L + s + 1])
+    sum_ac_lower = np.sum(prsa_output_ac[L - s + 1:L + 1])
     ac = (1 / (2 * s)) * (sum_ac_upper - sum_ac_lower)
 
     return ac
@@ -53,8 +53,8 @@ def calculate_dc(prsa_output_dc: np.ndarray, L: int, s: int) -> float:
     float: The calculated DC value.
     """
     L = int(L / 2)
-    sum_dc_upper = sum(prsa_output_dc[L + 1:L + s + 1])
-    sum_dc_lower = sum(prsa_output_dc[L - s:L])
+    sum_dc_upper = np.sum(prsa_output_dc[L + 1:L + s + 1])
+    sum_dc_lower = np.sum(prsa_output_dc[L - s:L])
     dc = (1 / (2 * s)) * (sum_dc_upper - sum_dc_lower)
 
     return dc
@@ -89,7 +89,7 @@ def calculate_aac(signal: np.ndarray, X: int) -> float:
     float: The calculated AAC value.
     """
     mean_after = np.mean(signal[X:X+X]) if X + X <= len(signal) else np.nan
-    mean_before = np.mean(signal[max(X-X, 0):X])
+    mean_before = np.mean(signal[0:X])
     
     aac = mean_after - mean_before
 
@@ -113,7 +113,7 @@ def calculate_adc(signal: np.ndarray, X: int) -> float:
     Returns:
     float: The calculated ADC value.
     """
-    mean_before = np.mean(signal[max(X-X, 0):X])
+    mean_before = np.mean(signal[0:X])
     mean_after = np.mean(signal[X:X+X]) if X + X <= len(signal) else np.nan 
     
     adc = mean_before - mean_after
