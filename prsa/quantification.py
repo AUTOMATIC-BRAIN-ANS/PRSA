@@ -27,7 +27,6 @@ def calculate_capacity_baumana(prsa_output: np.ndarray, L: int, s: int) -> float
     Returns:
     float: The calculated DC or AC value.
     """
-    L = L // 2
     minuend = np.sum(prsa_output[L + 1:L + s])
     subtrahend = np.sum(prsa_output[L - s + 1:L])
     capacity = (1 / (2 * s)) * (minuend - subtrahend)
