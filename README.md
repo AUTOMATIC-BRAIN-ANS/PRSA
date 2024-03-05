@@ -1,6 +1,12 @@
 # PRSA
 
-Description of the project or document.
+Repository contains source code to calculate phase rectified signal averaging (PRSA). PRSA is capable of detecting and quantifying quasi-periodic oscillations masked by the nonstationary nature
+of composite signals and noise. More detiales could be found in:
+
+Kantelhardt JW, Bauer A, Schumann AY, Barthel P, Schneider R, Malik M, Schmidt G. Phase-rectified signal averaging for the detection of quasi-periodicities and the prediction of cardiovascular risk. Chaos. 2007 Mar;17(1):015112. doi: 10.1063/1.2430636. 
+
+Campana LM, Owens RL, Clifford GD, Pittman SD, Malhotra A. Phase-rectified signal averaging as a sensitive index of autonomic changes with aging. J Appl Physiol (1985). 2010 Jun;108(6):1668-73. doi: 10.1152/japplphysiol.00013.2010.
+
 
 ## Try Out the Code
 
