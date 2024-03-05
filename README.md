@@ -60,7 +60,8 @@ Once Poetry is installed:
 
 ## Acknowledgement
 
-Acknowledgements and credits.
+Authors: Mikołaj Najda (276928@student.pwr.edu.pl) and Ignacy Berent (275255@student.pwr.edu.pl )
+Project Investigator: Agnieszka Uryga (agnieszka.uryga@pwr.edu.pl)
 
 ## Funding
 
