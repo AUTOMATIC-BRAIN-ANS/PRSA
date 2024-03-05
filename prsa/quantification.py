@@ -107,11 +107,13 @@ J Appl Physiol (1985).
 2010;108(6):1668-1673. doi:10.1152/japplphysiol.00013.2010
 
 """
-def calculate_capacity(rr_intervals: np.ndarray) -> float:
+
+
+def calculate_capacity_campana(prsa_output: np.ndarray) -> float:
     """
     Calculate the Deceleration or Acceleration Capacity (DC or AC) at a given anchor point.
     (Haar wavelet analysis at a specific scale of 2)
-    
+
     The formula for calculating the capacity is:
     DC or AC = [RR(0) + RR(1) - RR(-1) - RR(-2)] / 4
 
@@ -121,14 +123,14 @@ def calculate_capacity(rr_intervals: np.ndarray) -> float:
     - RR(-1) and RR(-2) are the two RR intervals immediately preceding the anchor point.
 
     Parameters:
-    rr_intervals (np.ndarray): An array of RR intervals.
+    prsa_output (np.ndarray): The phase-rectified signal.
 
     Returns:
     float: The calculated DC or AC value.
     """
-    if len(rr_intervals) < 4:
+    if len(prsa_output) < 4:
         return np.nan
 
-    capacity = (rr_intervals[0] + rr_intervals[1] - rr_intervals[-1] - rr_intervals[-2]) / 4
-    
+    capacity = (prsa_output[0] + prsa_output[1] - prsa_output[-1] - prsa_output[-2]) / 4
+
     return capacity
