@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "prsa"
+version = "0.1.0"
+description = "Package for multiple PRSA approaches"
+authors = ["Mikolaj Najda <276928@student.pwr.edu.pl>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.11"
+matplotlib = "3.5.1"
+numpy = "1.22.3"
+pandas = "1.4.3"
+scipy = "1.8.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
