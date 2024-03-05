@@ -1,13 +1,14 @@
 import numpy as np
 
 """
-Source for the following two formulas:
+Source for the following formula:
 Chen T, Feng G, Heiselman C, Quirk JG, Djurić PM. IMPROVING PHASE-RECTIFIED SIGNAL 
 AVERAGING FOR FETAL HEART RATE ANALYSIS. Proc IEEE Int Conf Acoust Speech Signal Process. 
 2022;2022:10.1109/icassp43922.2022.9747860. doi:10.1109/icassp43922.2022.9747860
 """
 
-def calculate_ac(prsa_output_ac: np.ndarray, L: int, s: int) -> float:
+
+def calculate_capacity_baumana(prsa_output: np.ndarray, L: int, s: int) -> float:
     """
     Calculate the Acceleration Capacity (AC) of a signal using phase-rectified signal averaging.
 
@@ -19,45 +20,20 @@ def calculate_ac(prsa_output_ac: np.ndarray, L: int, s: int) -> float:
     - s is the parameter for summarizing the phase-rectified curves (assumed to be even).
 
     Parameters:
-    prsa_output_ac (np.ndarray): The input phase-rectified signal.
-    L (int): The anchor point around which the AC is calculated.
+    prsa_output (np.ndarray): The phase-rectified signal.
+    L (int): The anchor point around which the capacity is calculated.
     s (int): The summarizing parameter for the phase-rectified curves.
 
     Returns:
-    float: The calculated AC value.
+    float: The calculated DC or AC value.
     """
-    L = int(L / 2)
-    sum_ac_upper = np.sum(prsa_output_ac[L + 1:L + s + 1])
-    sum_ac_lower = np.sum(prsa_output_ac[L - s + 1:L + 1])
-    ac = (1 / (2 * s)) * (sum_ac_upper - sum_ac_lower)
+    L = L // 2
+    minuend = np.sum(prsa_output[L + 1:L + s])
+    subtrahend = np.sum(prsa_output[L - s + 1:L])
+    capacity = (1 / (2 * s)) * (minuend - subtrahend)
 
-    return ac
+    return capacity
 
-def calculate_dc(prsa_output_dc: np.ndarray, L: int, s: int) -> float:
-    """
-    Calculate the Deceleration Capacity (DC) of a signal using phase-rectified signal averaging.
-
-    The formula for DC is given by:
-    DC = (1 / (2s)) * Σ(x_DC[i]) from i = L+1 to L+s - (1 / (2s)) * Σ(x_DC[i]) from i = L-s to L
-    where:
-    - x_DC[i] is the phase-rectified signal for deceleration capacity at point i,
-    - L is the anchor point around which the window is considered,
-    - s is the parameter for summarizing the phase-rectified curves (assumed to be even).
-
-    Parameters:
-    prsa_output_dc (np.ndarray): The input phase-rectified signal.
-    L (int): The anchor point around which the DC is calculated.
-    s (int): The summarizing parameter for the phase-rectified curves.
-
-    Returns:
-    float: The calculated DC value.
-    """
-    L = int(L / 2)
-    sum_dc_upper = np.sum(prsa_output_dc[L + 1:L + s + 1])
-    sum_dc_lower = np.sum(prsa_output_dc[L - s:L])
-    dc = (1 / (2 * s)) * (sum_dc_upper - sum_dc_lower)
-
-    return dc
 
 """
 The formula for calculating the AAC is based on the following article:
@@ -70,6 +46,7 @@ the Federation of Asia and Oceania Perinatal Societies, the International Societ
 However, the ADC is calculated based on the similar mathematical logic. 
 """
 
+
 def calculate_aac(signal: np.ndarray, X: int) -> float:
     """
     Calculate the Acceleration Capacity (AAC) of a signal.
@@ -77,8 +54,8 @@ def calculate_aac(signal: np.ndarray, X: int) -> float:
     The formula for AAC is given by:
     AAC = (1/X) * Σ(signal[i]) from i=0 to X-1 - (1/X) * Σ(signal[i]) from i=-X to -1
 
-    This calculates the difference between the mean of the signal values 
-    immediately after the anchor point (up to X-1) and the mean of the signal 
+    This calculates the difference between the mean of the signal values
+    immediately after the anchor point (up to X-1) and the mean of the signal
     values immediately before the anchor point (up to X back from the anchor point).
 
     Parameters:
@@ -88,12 +65,13 @@ def calculate_aac(signal: np.ndarray, X: int) -> float:
     Returns:
     float: The calculated AAC value.
     """
-    mean_after = np.mean(signal[X:X+X]) if X + X <= len(signal) else np.nan
+    mean_after = np.mean(signal[X:X + X]) if X + X <= len(signal) else np.nan
     mean_before = np.mean(signal[0:X])
-    
+
     aac = mean_after - mean_before
 
     return aac
+
 
 def calculate_adc(signal: np.ndarray, X: int) -> float:
     """
@@ -102,8 +80,8 @@ def calculate_adc(signal: np.ndarray, X: int) -> float:
     The formula for ADC is assumed to be the inverse of AAC:
     ADC = (1/X) * Σ(signal[i]) from i=-X to -1 - (1/X) * Σ(signal[i]) from i=0 to X-1
 
-    This calculates the difference between the mean of the signal values 
-    immediately before the anchor point (up to X back from the anchor point) 
+    This calculates the difference between the mean of the signal values
+    immediately before the anchor point (up to X back from the anchor point)
     and the mean of the signal values immediately after the anchor point (up to X-1).
 
     Parameters:
@@ -114,11 +92,12 @@ def calculate_adc(signal: np.ndarray, X: int) -> float:
     float: The calculated ADC value.
     """
     mean_before = np.mean(signal[0:X])
-    mean_after = np.mean(signal[X:X+X]) if X + X <= len(signal) else np.nan 
-    
+    mean_after = np.mean(signal[X:X + X]) if X + X <= len(signal) else np.nan
+
     adc = mean_before - mean_after
 
     return adc
+
 
 """
 The next function is based on:
