@@ -10,12 +10,12 @@ AVERAGING FOR FETAL HEART RATE ANALYSIS. Proc IEEE Int Conf Acoust Speech Signal
 
 def calculate_capacity_baumana(prsa_output: np.ndarray, L: int, s: int) -> float:
     """
-    Calculate the Acceleration Capacity (AC) of a signal using phase-rectified signal averaging.
+    Calculate the capacity (AC or DC) of a signal using phase-rectified signal averaging.
 
     The formula for AC is given by:
     AC = (1 / (2s)) * Σ(x_AC[i]) from i = L+1 to L+s - (1 / (2s)) * Σ(x_AC[i]) from i = L-s+1 to L
     where:
-    - x_AC[i] is the phase-rectified signal for acceleration capacity at point i,
+    - x_AC[i] is the phase-rectified signal for acceleration or deceleration capacity at point i,
     - L is the anchor point around which the window is considered,
     - s is the parameter for summarizing the phase-rectified curves (assumed to be even).
 
